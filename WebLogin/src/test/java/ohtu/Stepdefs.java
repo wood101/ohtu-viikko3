@@ -9,32 +9,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 public class Stepdefs {
-    WebDriver driver = new ChromeDriver();
+    WebDriver driver = new HtmlUnitDriver();
     String baseUrl = "http://localhost:4567";
     
     @Given("^login is selected$")
     public void login_selected() throws Throwable {
         driver.get(baseUrl);
         WebElement element = driver.findElement(By.linkText("login"));       
-        element.click();          
+        element.click();  
     } 
-
-    @When("^username \"([^\"]*)\" and password \"([^\"]*)\" are given$")
-    public void username_and_password_are_given(String username, String password) throws Throwable {
-        WebElement element = driver.findElement(By.name("username"));
-        element.sendKeys(username);
-        element = driver.findElement(By.name("password"));
-        element.sendKeys(password);
-        element = driver.findElement(By.name("login"));
-        element.submit();  
-    }
-
-    @Then("^system will respond \"([^\"]*)\"$")
-    public void system_will_respond(String pageContent) throws Throwable {
-        assertTrue(driver.getPageSource().contains(pageContent));
-    }
     
     @When("^correct username \"([^\"]*)\" and password \"([^\"]*)\" are given$")
     public void username_correct_and_password_are_given(String username, String password) throws Throwable {
@@ -57,6 +43,58 @@ public class Stepdefs {
         pageHasContent("Give your credentials to login");
     }     
     
+    @When("^nonexistent username \"([^\"]*)\" and nonexistent password \"([^\"]*)\" are given$")
+    public void nonexistant_username_is_given(String username, String password) throws Throwable {
+        logInWith(username, password);
+    }
+    
+    @Given("^command new user is selected$")
+    public void new_user_selected() throws Throwable {
+        navigateToNewUser();   
+    }
+
+    @When("^a valid username \"([^\"]*)\" and password \"([^\"]*)\" and matching password confirmation are entered$")
+    public void correct_username_and_password_are_given(String username, String password) throws Throwable {
+        createNewUser(username, password, password);
+    }
+    
+    @Then("^a new user is created$")
+    public void new_user_is_created() throws Throwable {
+        pageHasContent("Welcome to Ohtu Application!");
+    }
+    
+    @When("^a too short an username \"([^\"]*)\" and password \"([^\"]*)\" and matching password confirmation are entered$")
+    public void short_username_and_correct_password_are_given(String username, String password) throws Throwable {
+        createNewUser(username, password, password);
+    }
+
+    @When("^a valid username \"([^\"]*)\" and a too short a password \"([^\"]*)\" and matching password confirmation are entered$")
+    public void correct_username_and_short_password_are_given(String username, String password) throws Throwable {
+        createNewUser(username, password, password);
+    }    
+
+    @When("^a valid username \"([^\"]*)\" and password \"([^\"]*)\" with password confirmation \"([^\"]*)\" are entered$")
+    public void correct_username_and_password_are_given_with_wrong_password_confirmation(String username, String password, String passwordConfirmation) throws Throwable {
+        createNewUser(username, password, passwordConfirmation);
+    }   
+    
+    @Then("^user is not created and error \"([^\"]*)\" is reported$")
+    public void new_user_is_created(String error) throws Throwable {
+        pageHasContent(error);
+    }
+    
+    @Given("^user with username \"([^\"]*)\" with password \"([^\"]*)\" is successfully created$")
+    public void correct_user_is_created(String username, String password) throws Throwable {
+        navigateToNewUser();  
+        createNewUser(username, password, password); 
+    }
+    
+    @Given("^user with username \"([^\"]*)\" and password \"([^\"]*)\" is tried to be created$")
+    public void incorrect_user_is_created(String username, String password) throws Throwable {
+        navigateToNewUser(); 
+        createNewUser(username, password, password); 
+    }
+    
     @After
     public void tearDown(){
         driver.quit();
@@ -64,6 +102,12 @@ public class Stepdefs {
         
     /* helper methods */
  
+    private void navigateToNewUser() {
+        driver.get(baseUrl);
+        WebElement element = driver.findElement(By.linkText("register new user"));       
+        element.click();  
+    }
+    
     private void pageHasContent(String content) {
         assertTrue(driver.getPageSource().contains(content));
     }
@@ -77,4 +121,18 @@ public class Stepdefs {
         element = driver.findElement(By.name("login"));
         element.submit();  
     } 
+
+    private void createNewUser(String username, String password, String passwordConfirmation) {
+        assertTrue(driver.getPageSource().contains("Create username and give password"));
+        WebElement element = driver.findElement(By.name("username"));
+        element.sendKeys(username);
+        element = driver.findElement(By.name("password"));
+        element.sendKeys(password);
+        element = driver.findElement(By.name("passwordConfirmation"));
+        element.sendKeys(passwordConfirmation);
+        element = driver.findElement(By.name("signup"));
+        element.submit();
+    }
+    
+    
 }

@@ -11,5 +11,20 @@
     
     <context:annotation-config />
     <context:component-scan base-package="ohtu" />  
+	
+	 <bean id="kauppa" class="ohtu.App">
+        <constructor-arg ref="io" />
+        <constructor-arg ref="auth" />
+    </bean>
+    
+    <bean id="io" class="ohtu.io.ConsoleIO">
+    </bean>
+    
+    <bean id="auth" class="ohtu.services.AuthenticationService">
+        <constructor-arg ref="userDao" />
+    </bean>
+    
+    <bean id="userDao" class="ohtu.data_access.InMemoryUserDao">
+    </bean>
     
 </beans>
