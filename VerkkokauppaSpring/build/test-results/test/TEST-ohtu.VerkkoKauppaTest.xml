@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ohtu.VerkkoKauppaTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2018-11-19T22:16:04" hostname="Janne-kone" time="0.944">
+  <properties/>
+  <testcase name="ostoskoristaPoistaminen" classname="ohtu.VerkkoKauppaTest" time="0.931"/>
+  <testcase name="kahdenTuotteenJoistaToinenLoppuOstoksenPaaytyttyaPankinMetodiaTilisiirtoKutsutaanOikeillaArvoilla" classname="ohtu.VerkkoKauppaTest" time="0.002"/>
+  <testcase name="ostoksenPaaytyttyaPankinMetodiaTilisiirtoKutsutaan" classname="ohtu.VerkkoKauppaTest" time="0.002"/>
+  <testcase name="kahdenSamanTuotteenOstoksenPaaytyttyaPankinMetodiaTilisiirtoKutsutaanOikeillaArvoilla" classname="ohtu.VerkkoKauppaTest" time="0.001"/>
+  <testcase name="kauppaPyytaaUudenViitenumeron" classname="ohtu.VerkkoKauppaTest" time="0.002"/>
+  <testcase name="aloitaAsiointiNollaaSession" classname="ohtu.VerkkoKauppaTest" time="0.003"/>
+  <testcase name="ostoksenPaaytyttyaPankinMetodiaTilisiirtoKutsutaanOikeillaArvoilla" classname="ohtu.VerkkoKauppaTest" time="0.001"/>
+  <testcase name="kahdenTuotteenOstoksenPaaytyttyaPankinMetodiaTilisiirtoKutsutaanOikeillaArvoilla" classname="ohtu.VerkkoKauppaTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
